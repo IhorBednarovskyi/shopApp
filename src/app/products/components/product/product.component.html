@@ -1,0 +1,13 @@
+<div>
+	<div>Product</div>
+	<div>
+		<ul>
+			<li>Name: {{product.name}} </li>
+			<li>Description: {{product.description}}</li>
+			<li>Price: {{product.price}} $</li>
+			<li>Category: {{product.category}}</li>
+			<li>{{product.isAvailable ? "Available" : "Not Available" }}</li>
+		</ul>
+		<button [disabled]="!product.isAvailable" class="btn btn-primary" (click)="onBuyProduct($event)">BUY</button>
+	</div>
+</div>
