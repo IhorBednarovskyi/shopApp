@@ -19,6 +19,10 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(private communicationService: CommunicationService, private cartService: CartService) {}
 
   ngOnInit() {
+    // немного запутано как для простого приложения.
+    // может быть не использовать коммуникатор сервис, а в сервисе для корзины
+    // предусмотреть метод добавления товара и вызвать его в ProductListComponent
+    // На ваше усмотрение.
     this.sub = this.communicationService.channel1$.subscribe((data: Product) => {
         this.productsList = this.cartService.putProductInCart(data);
     });
