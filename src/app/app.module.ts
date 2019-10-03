@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
+// App modules
+import { ProductsModule } from './products/products.module';
+
+// App components
 import { AppComponent } from './app.component';
-import { ProductComponent } from './products/components/product/product.component';
-import { ProductListComponent } from './products/components/product-list/product-list.component';
 import { CartComponent } from './cart/components/cart/cart.component';
 
-import { ProductsService } from './products/services/products.service';
+// App services
 import { CartService } from './cart/services/cart.service';
 import { CommunicationService } from './core/services/communication.service';
 
@@ -16,15 +18,14 @@ import { CommunicationService } from './core/services/communication.service';
 @NgModule({
   declarations: [
     AppComponent,
-    ProductComponent,
-    ProductListComponent,
     CartComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ProductsModule
   ],
-  providers: [ProductsService, CartService, CommunicationService],
+  providers: [CartService, CommunicationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
