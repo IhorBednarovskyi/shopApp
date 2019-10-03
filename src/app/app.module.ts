@@ -6,13 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 // App modules
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
+import { SharedModule } from './shared/shared.module';
 
 // App components
 import { AppComponent } from './app.component';
-
-// App services
-import { CommunicationService } from './core/services/communication.service';
-
 
 @NgModule({
   declarations: [
@@ -22,9 +19,9 @@ import { CommunicationService } from './core/services/communication.service';
     BrowserModule,
     AppRoutingModule,
     ProductsModule,
-    CartModule
+    CartModule,
+    SharedModule
   ],
-  providers: [CommunicationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

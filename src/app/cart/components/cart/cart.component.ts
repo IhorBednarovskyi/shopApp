@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 
-import { CommunicationService } from './../../../core/services/communication.service';
+import { CommunicationService } from './../../../shared/services/communication.service';
 import { CartService } from './../../services/cart.service';
 import { Product } from './../../../products/models/product.model';
 

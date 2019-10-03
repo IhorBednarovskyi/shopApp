@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from './../../models/product.model';
 import { ProductsService } from './../../services/products.service';
-import { CommunicationService } from './../../../core/services/communication.service';
+import { CommunicationService } from './../../../shared/services/communication.service';
 
 
 @Component({
