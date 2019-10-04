@@ -1,5 +1,5 @@
 export enum ProductType {
-    Motorcycle = 'otorcycle',
+    Motorcycle = 'Motorcycle',
     LightingAccessories = 'Lighting Accessories',
     Wheels = 'Wheels',
     ExteriorAccessories = 'Exterior Accessories',

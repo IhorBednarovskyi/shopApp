@@ -1,13 +1,10 @@
-<div>
-	<ul>
-		<li>Name: {{product.name}} </li>
-		<li>Price: {{product.price}} $</li>
-	</ul>
+<div class="col-xs-6 col-lg-4 shop-card-body cart-product">
+	<h4 class="name-content" [title]="product.name">{{product.name}}</h4>
+	<p class="description-content" [title]="product.description">{{product.description}}</p>
 	<div>
 		<input type="number" [(ngModel)]="product.amount"
 		    (change)="changeHandler()"/>
-		<button class="btn btn-primary"
+		<button class="btn btn-danger"
 			(click)="removeHandler()">Remove</button>
 	</div>
-
-</div>	
+</div>
