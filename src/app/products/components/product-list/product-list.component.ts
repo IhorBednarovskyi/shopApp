@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from './../../models/product.model';
 import { ProductsService } from './../../services/products.service';
-import { CommunicationService } from './../../../shared/services/communication.service';
+import { CartService } from './../../../cart/services/cart.service';
 
 
 @Component({
@@ -13,14 +13,14 @@ import { CommunicationService } from './../../../shared/services/communication.s
 export class ProductListComponent implements OnInit {
   products: Array<Product>;
 
-  constructor(private productsService: ProductsService, private communicationService: CommunicationService) { }
+  constructor(private productsService: ProductsService, private cartService: CartService) { }
 
   ngOnInit() {
     this.products = this.productsService.getProducts();
   }
 
   onBuyProduct(product: Product): void {
-    this.communicationService.publichData(product);
+    this.cartService.addProductInCart(product);
   }
 
 }

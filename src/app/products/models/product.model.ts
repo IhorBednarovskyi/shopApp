@@ -7,8 +7,10 @@ export class Product {
         public description: string,
         public price: number,
         public category: ProductType,
-        public isAvailable?: boolean
+        public isAvailable?: boolean,
+        public amount?: number
     ) {
         this.isAvailable = isAvailable || false;
+        this.amount = amount || 0;
     }
 }
