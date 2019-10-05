@@ -5,7 +5,7 @@ import { Directive, Renderer2, ElementRef,
   selector: '[appItemHover]'
 })
 export class ItemHoverDirective {
-    private bgroundColor = 'gray-bground';
+    private bgroundColorClass = 'gray-bground';
 
     constructor(private el: ElementRef, private renderer: Renderer2) {
     }
@@ -13,10 +13,10 @@ export class ItemHoverDirective {
     @HostBinding('class') className = 'col-xs-6 col-lg-4 shop-card-body';
 
     @HostListener('mouseover') onMouseOver() {
-        this.renderer.addClass(this.el.nativeElement, this.bgroundColor);
+        this.renderer.addClass(this.el.nativeElement, this.bgroundColorClass);
     }
 
     @HostListener('mouseleave') onMouseLeave() {
-        this.renderer.removeClass(this.el.nativeElement, this.bgroundColor);
+        this.renderer.removeClass(this.el.nativeElement, this.bgroundColorClass);
     }
 }
