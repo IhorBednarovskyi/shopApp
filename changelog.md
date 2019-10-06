@@ -1,3 +1,7 @@
+version 1.2.0
+
+
+
 version 1.1.0
 Create Product module
 Import Produt module to the App module

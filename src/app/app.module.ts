@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
 import { SharedModule } from './shared/shared.module';
+import { LayoutModule } from './layout/layout.module';
+
 
 // App components
 import { AppComponent } from './app.component';
@@ -22,7 +24,8 @@ import { AppComponent } from './app.component';
     ProductsModule,
     CartModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    LayoutModule
   ],
   bootstrap: [AppComponent]
 })
