@@ -1,6 +1,6 @@
 <div appItemHover>
 	<h4 class="name-content" [title]="product.name">{{product.name}}</h4>
-	<p class="description-content" [title]="product.description">{{product.description}}</p>
+	<p appClickFontChange class="description-content" [title]="product.description">{{product.description}}</p>
 	<ul class="list-inline">
 		<li><strong>Price:</strong> {{product.price}} $</li>
 		<li><strong>Category:</strong> {{product.category}}</li>
