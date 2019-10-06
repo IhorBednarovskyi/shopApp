@@ -3,6 +3,8 @@
     	<h3>Products in cart</h3>
 		<div><strong>Total Bill: </strong> {{totalBill}} $</div>
 		<div><strong>Products in Cart:</strong> {{totalAmount}}</div>
+		<button class="btn btn-danger"
+			(click)="clearCart()">ClearAll</button>
 		<div class="clearfix">
 			<app-cart-item *ngFor="let product of productsList"
 	    		[product]="product"

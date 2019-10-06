@@ -58,7 +58,11 @@ export class CartService {
         this.itemList[name] = poduct;
     }
 
-    removeProduct(name: string) {
+    removeProduct(name: string): void {
         delete this.itemList[name];
+    }
+
+    removeAllProduct(): void {
+        this.itemList = {};
     }
 }
