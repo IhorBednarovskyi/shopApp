@@ -8,7 +8,7 @@
 		<div class="clearfix">
 			<app-cart-item *ngFor="let product of productsList"
 	    		[product]="product"
-	    		(productAmountChange)="productAmountChange($event)"
+	    		(productAmountChange)="productAmountChange()"
 	    		(removeProduct)="removeProduct($event)"></app-cart-item>
 		</div>
 	</div>

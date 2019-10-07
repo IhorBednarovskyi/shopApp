@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { CartService } from './../../services/cart.service';
-import { Product } from './../../../products/models/product.model';
+import { CartProduct } from './../../models/cart-product.model';
 
 @Component({
   selector: 'app-cart-list',
@@ -12,7 +12,7 @@ import { Product } from './../../../products/models/product.model';
 export class CartListComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
-  public productsList: Array<Product>;
+  public productsList: Array<CartProduct>;
   public totalBill: number;
   public totalAmount: number;
 
@@ -29,8 +29,7 @@ export class CartListComponent implements OnInit, OnDestroy {
       this.sub.unsubscribe();
   }
 
-  productAmountChange(product: Product): void {
-      this.cartService.productAmountChange(product);
+  productAmountChange(): void {
       this.calculateBill();
   }
 

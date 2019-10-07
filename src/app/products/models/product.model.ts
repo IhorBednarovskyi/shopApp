@@ -1,6 +1,5 @@
 import { ProductType } from './product-type.enum';
 
-
 export class Product {
     constructor(
         public name: string,

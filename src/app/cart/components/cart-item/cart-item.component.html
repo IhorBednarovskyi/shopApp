@@ -2,7 +2,7 @@
 	<h4 class="name-content" [title]="product.name">{{product.name}}</h4>
 	<p class="description-content" [title]="product.description">{{product.description}}</p>
 	<div>
-		<input type="number" [(ngModel)]="product.amount"
+		<input type="number" [(ngModel)]="product.amount" min="1"
 		    (change)="changeHandler()"/>
 		<button class="btn btn-danger"
 			(click)="removeHandler()">Remove</button>
