@@ -22,6 +22,7 @@ export class ConfigOptionsService {
                 this.config[key] = data[key];
             }
         }
+        // может так this.config = {...this.config, ...data} вместо for
     }
 
     getConfig(): ConfigParams {
