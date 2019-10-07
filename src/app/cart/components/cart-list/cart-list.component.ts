@@ -21,7 +21,8 @@ export class CartListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.cartService.channel1$.subscribe(() => {
         this.productsList = this.cartService.getProdutsInCart();
-        this.calculateBill();
+        this.totalBill = this.cartService.getTotalBill();
+        this.totalAmount = this.cartService.getItemsNumber();
     });
   }
 
@@ -30,22 +31,19 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   productAmountChange(): void {
-      this.calculateBill();
+      this.totalBill = this.cartService.getTotalBill();
+      this.totalAmount = this.cartService.getItemsNumber();
   }
 
   removeProduct(name: string): void {
       this.cartService.removeProduct(name);
-      this.calculateBill();
+      this.totalBill = this.cartService.getTotalBill();
+      this.totalAmount = this.cartService.getItemsNumber();
       this.productsList = this.cartService.getProdutsInCart();
   }
 
   clearCart(): void {
       this.cartService.removeAllProduct();
       this.productsList = [];
-  }
-
-  private calculateBill() {
-      this.totalBill = this.cartService.getTotalBill();
-      this.totalAmount = this.cartService.getItemsNumber();
   }
 }

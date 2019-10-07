@@ -7,11 +7,20 @@ import { CoreModule } from './../core.module';
 export class LocalStorageService {
 
     save(key: string, data: any): void {
-        localStorage.setItem(key, data);
+        try {
+            localStorage.setItem(key, JSON.stringify(data));
+        } catch (e) {
+            console.error('Error saving to localStorage', e);
+        }
     }
 
     get(key: string): any {
-        return localStorage.getItem(key);
+        try {
+            return JSON.parse(localStorage.getItem(key));
+        } catch (e) {
+            console.error('Error getting data from localStorage', e);
+            return null;
+        }
     }
 
     remove(key: string): void {

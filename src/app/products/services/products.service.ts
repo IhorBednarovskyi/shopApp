@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Product } from './../models/product.model';
 import { ProductType } from './../models/product-type.enum';
 
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductsService {
 
   getProducts(): Array<Product> {

@@ -3,7 +3,9 @@ import { Subject } from 'rxjs';
 
 import { CartProduct } from './../models/cart-product.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CartService {
     private channel1 = new Subject();
     private itemList: Array<CartProduct> = [];
@@ -15,7 +17,7 @@ export class CartService {
     }
 
     addProductInCart(name: string, price: number): void {
-        let item = this.itemList.find(item => item.getName() === name);
+        let item = this.itemList.find(x => x.getName() === name);
 
         if (item) {
             item.changeAmount(1);

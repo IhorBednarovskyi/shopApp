@@ -17,11 +17,7 @@ export class ConfigOptionsService {
     };
 
     setConfig(data: ConfigParams): void {
-        for (const key in data) {
-            if (this.config.hasOwnProperty(key)) {
-                this.config[key] = data[key];
-            }
-        }
+        this.config = {...this.config, ...data};
     }
 
     getConfig(): ConfigParams {

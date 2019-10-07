@@ -6,10 +6,8 @@ export class Product {
         public description: string,
         public price: number,
         public category: ProductType,
-        public isAvailable?: boolean,
-        public amount?: number
+        public isAvailable?: boolean
     ) {
         this.isAvailable = isAvailable || false;
-        this.amount = amount || 0;
     }
 }
