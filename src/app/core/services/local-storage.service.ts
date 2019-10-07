@@ -7,7 +7,7 @@ import { CoreModule } from './../core.module';
 export class LocalStorageService {
 
     save(key: string, data: any): void {
-        localStorage.setItem(key, data);
+        localStorage.setItem(key, data); // желательно проверить не объект ли это и JSON.stringify использовать;
     }
 
     get(key: string): any {

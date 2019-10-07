@@ -14,7 +14,7 @@ import { ProductsService } from './services/products.service';
     ProductListComponent,
     ProductComponent,
   ],
-  providers: [ProductsService],
+  providers: [ProductsService], // предпочтительнее регистрирова через @Injectable
   exports: [
     ProductListComponent
   ]

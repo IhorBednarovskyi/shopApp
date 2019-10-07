@@ -31,7 +31,7 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   productAmountChange(product: Product): void {
       this.cartService.productAmountChange(product);
-      this.calculateBill();
+      this.calculateBill(); // может можно этот метод спрятать в сервис?
   }
 
   removeProduct(name: string): void {

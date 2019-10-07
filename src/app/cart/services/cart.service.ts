@@ -10,7 +10,7 @@ interface ItemList {
 @Injectable()
 export class CartService {
     private channel1 = new Subject();
-    private itemList: ItemList = {};
+    private itemList: ItemList = {}; // а есть смысл в таком хранении, чтобы делать преобразование к массиву?
 
     public channel1$ = this.channel1.asObservable();
 
