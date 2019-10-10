@@ -13,6 +13,7 @@ export class AppComponent implements AfterViewInit {
     private title = 'Shop app';
 
     ngAfterViewInit() {
+      // Как вариант можно использовать Renderer2
         this.headerTitle.nativeElement.innerText = this.title;
     }
 }
