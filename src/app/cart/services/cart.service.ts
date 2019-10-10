@@ -23,9 +23,10 @@ export class CartService {
             item.changeAmount(1);
         } else {
             item = new CartProduct(name, price);
+            // тут мутирование данных
             this.itemList.push(item);
         }
-        this.channel1.next();
+        this.channel1.next(); // почему только при добавлении вызывается этот метод, а при удалении нет?
     }
 
     getTotalBill(): number {
@@ -41,6 +42,7 @@ export class CartService {
     }
 
     removeProduct(name: string): void {
+      // а тут немутирование данных. желательно один подход использовать push + splice, spread + filter
         this.itemList = this.itemList.filter(item => item.getName() !== name);
     }
 

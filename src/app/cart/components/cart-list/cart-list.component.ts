@@ -36,6 +36,7 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   removeProduct(name: string): void {
+    // если на ремув тоже будет что-то приходить в поток, то не нужно будет писать последние 3 строчки
       this.cartService.removeProduct(name);
       this.totalBill = this.cartService.getTotalBill();
       this.totalAmount = this.cartService.getItemsNumber();

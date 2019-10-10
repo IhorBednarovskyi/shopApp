@@ -20,6 +20,8 @@ export class ProductListComponent implements OnInit {
   }
 
   onBuyProduct(product: Product): void {
+    // лучше передавать объект, а из него брать то, что надо.
+    // Один параметр всегда лучше, на мой взгляд
     this.cartService.addProductInCart(product.name, product.price);
   }
 
