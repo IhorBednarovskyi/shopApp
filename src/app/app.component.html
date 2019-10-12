@@ -1,4 +1,7 @@
-<h1 #appTitle></h1>
+<div>
+    <h1 #appTitle></h1>
+    <span class="entry-time">{{currentTime | async | date: 'HH:mm:ss dd/MM/yyyy'}}</span>
+</div>
 <app-product-list></app-product-list>
 <app-cart-list></app-cart-list>
 <app-about></app-about>

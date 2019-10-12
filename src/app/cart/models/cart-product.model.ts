@@ -2,7 +2,7 @@ export class CartProduct {
     constructor(
         private name: string,
         private price: number,
-        private amount?: number
+        public amount?: number
     ) {
         this.amount = amount || 1;
     }
@@ -13,10 +13,6 @@ export class CartProduct {
 
     getPrice(): number {
         return this.price;
-    }
-
-    getAmount(): number {
-        return this.amount;
     }
 
     changeAmount(count: number) {

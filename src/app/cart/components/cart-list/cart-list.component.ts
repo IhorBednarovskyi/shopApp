@@ -37,9 +37,6 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   removeProduct(name: string): void {
       this.cartService.removeProduct(name);
-      this.totalBill = this.cartService.getTotalBill();
-      this.totalAmount = this.cartService.getItemsNumber();
-      this.productsList = this.cartService.getProdutsInCart();
   }
 
   clearCart(): void {

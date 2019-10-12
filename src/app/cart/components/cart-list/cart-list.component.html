@@ -1,7 +1,7 @@
 <div class="shop-cart-body">
 	<div *ngIf="productsList?.length > 0 else emptyBlock">
     	<h3>Products in cart</h3>
-		<div><strong>Total Bill: </strong> {{totalBill}} $</div>
+		<div><strong>Total Bill: </strong> {{totalBill | currency : USD}} </div>
 		<div><strong>Products in Cart:</strong> {{totalAmount}}</div>
 		<button class="btn btn-danger"
 			(click)="clearCart()">ClearAll</button>

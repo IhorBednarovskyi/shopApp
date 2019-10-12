@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { CartProduct } from './../models/cart-product.model';
+import { Product } from './../../products/models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,19 @@ export class CartService {
         return this.itemList;
     }
 
-    addProductInCart(name: string, price: number): void {
-        let item = this.itemList.find(x => x.getName() === name);
+    addProductInCart(product: Product): void {
+        let itemAmount: number;
+        const tempItemList: Array<CartProduct> = this.itemList.filter(item => {
+            const isName: boolean = item.getName() === product.name;
+            if (isName) {
+                itemAmount = item.amount;
+            }
+            return !isName;
+        });
+        const addedItem: CartProduct = new CartProduct(product.name, product.price,
+            (itemAmount ? ++itemAmount : 1));
 
-        if (item) {
-            item.changeAmount(1);
-        } else {
-            item = new CartProduct(name, price);
-            this.itemList.push(item);
-        }
+        this.itemList = [...tempItemList, addedItem];
         this.channel1.next();
     }
 
@@ -36,12 +41,13 @@ export class CartService {
 
     getItemsNumber(): number {
         return this.itemList.reduce((count: number, item: CartProduct) => {
-            return count + item.getAmount();
+            return count + item.amount;
         }, 0);
     }
 
     removeProduct(name: string): void {
         this.itemList = this.itemList.filter(item => item.getName() !== name);
+        this.channel1.next();
     }
 
     removeAllProduct(): void {

@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit {
   }
 
   onBuyProduct(product: Product): void {
-    this.cartService.addProductInCart(product.name, product.price);
+    this.cartService.addProductInCart(product);
   }
 
 }

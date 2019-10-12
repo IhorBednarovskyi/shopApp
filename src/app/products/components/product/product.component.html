@@ -2,8 +2,8 @@
 	<h4 class="name-content" [title]="product.name">{{product.name}}</h4>
 	<p appClickFontChange class="description-content" [title]="product.description">{{product.description}}</p>
 	<ul class="list-inline">
-		<li><strong>Price:</strong> {{product.price}} $</li>
-		<li><strong>Category:</strong> {{product.category}}</li>
+		<li><strong>Price:</strong> {{product.price | currency : USD : 'symbol': '3.2'}}</li>
+		<li><strong>Category:</strong> {{product.category | titlecase}}</li>
 		<li><strong>{{product.isAvailable ? "Available" : "Not Available" }}</strong></li>
 	</ul>
 	<button [disabled]="!product.isAvailable" class="btn btn-primary" (click)="onBuyProduct($event)">Buy</button>
