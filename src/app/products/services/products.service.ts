@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { of, Observable } from 'rxjs';
 
 import { Product } from './../models/product.model';
 import { ProductType } from './../models/product-type.enum';
@@ -7,9 +8,7 @@ import { ProductType } from './../models/product-type.enum';
   providedIn: 'root'
 })
 export class ProductsService {
-
-  getProducts(): Array<Product> {
-    return [
+  private products: Array<Product> = [
         new Product(`Car Charger for Samsung Galaxy S5`,
         `Of Imitation Leather. leaves full access to your phone's ...`,
         12.56, ProductType.InteriorAccessories, true),
@@ -30,5 +29,8 @@ export class ProductsService {
         `Radiator Cooling Fan Motor Assembly with Control Module Replacement ...`,
         159.58, ProductType.ReplacementParts, true)
     ];
+
+  getProducts$(): Observable<Product[]> {
+    return of(this.products);
   }
 }

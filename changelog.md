@@ -1,3 +1,6 @@
+version 1.3.0
+Added "currency" pipes to product price and to cart total bill, added "titlecase" pipe to category product info field and show current time on top right corner of the site, used async & date pipes.
+
 version 1.2.0
 Created Click font change directive wich cnange product desription font weight to 600 after click on it.
 Created AboutComponent and injected all previous Services to it.
