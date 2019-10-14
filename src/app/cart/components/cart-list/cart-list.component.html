@@ -3,10 +3,22 @@
     	<h3>Products in cart</h3>
 		<div><strong>Total Bill: </strong> {{totalBill | currency : USD}} </div>
 		<div><strong>Products in Cart:</strong> {{totalAmount}}</div>
+		<div>
+			<strong>Sort by:</strong>
+			<select (change)="changeSortValue($event.target.value)">
+				<option value="name">Name</option>
+				<option value="price">Price</option>
+				<option value="amount">Amount</option>
+			</select>
+			<select (change)="changeSortOrder($event.target.value)">
+				<option value="true">Desc</option>
+				<option value="false">Asc</option>
+			</select>
+		</div>
 		<button class="btn btn-danger"
 			(click)="clearCart()">ClearAll</button>
 		<div class="clearfix">
-			<app-cart-item *ngFor="let product of productsList"
+			<app-cart-item *ngFor="let product of productsList | orderBy:sortField:sortOrder"
 	    		[product]="product"
 	    		(productAmountChange)="productAmountChange()"
 	    		(removeProduct)="removeProduct($event)"></app-cart-item>

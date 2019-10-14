@@ -1,4 +1,5 @@
 version 1.3.0
+Changed getProduct method return type from Array to Obervable, and show list of product by using async pipe.
 Added "currency" pipes to product price and to cart total bill, added "titlecase" pipe to category product info field and show current time on top right corner of the site, used async & date pipes.
 
 version 1.2.0

@@ -12,9 +12,12 @@ import { CartProduct } from './../../models/cart-product.model';
 export class CartListComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
-  public productsList: Array<CartProduct>;
-  public totalBill: number;
-  public totalAmount: number;
+  productsList: Array<CartProduct>;
+  totalBill: number;
+  totalAmount: number;
+  sortField = 'name';
+  sortOrder = true;
+
 
   constructor(private cartService: CartService) {}
 
@@ -42,5 +45,13 @@ export class CartListComponent implements OnInit, OnDestroy {
   clearCart(): void {
       this.cartService.removeAllProduct();
       this.productsList = [];
+  }
+
+  changeSortValue(value: string): void {
+    this.sortField = value;
+  }
+
+  changeSortOrder(value: string): void {
+    this.sortOrder = JSON.parse(value);
   }
 }
