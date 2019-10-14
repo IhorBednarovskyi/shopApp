@@ -1,4 +1,6 @@
 version 1.3.0
+Applied orderBy pipe to cart product list, and added two dropdown selectors where you can change sorting options for cart page section.
+Created OrderBy pipe with two parameters wich provide sort field name and sort order direction.
 Changed getProduct method return type from Array to Obervable, and show list of product by using async pipe.
 Added "currency" pipes to product price and to cart total bill, added "titlecase" pipe to category product info field and show current time on top right corner of the site, used async & date pipes.
 
