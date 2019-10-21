@@ -1,6 +1,6 @@
 <div appItemHover>
 	<h4 class="name-content" [title]="product.getName()">{{product.getName()}}</h4>
-	<span>{{product.getPrice() | currency: UAD}}</span>
+	<span>{{product.getPrice() | currency: 'USD'}}</span>
 	<div>
 		<input type="number" [(ngModel)]="product.amount" min="1"
 		    (change)="changeHandler()"/>
