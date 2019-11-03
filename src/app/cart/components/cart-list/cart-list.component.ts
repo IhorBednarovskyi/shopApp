@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
+
+import { Router } from '@angular/router';
 
 import { CartService } from './../../services/cart.service';
 import { CartProduct } from './../../models/cart-product.model';
@@ -12,20 +14,22 @@ import { CartProduct } from './../../models/cart-product.model';
 export class CartListComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
-  productsList: Array<CartProduct>;
+  productsList$: Observable<CartProduct[]>;
   totalBill: number;
   totalAmount: number;
   sortField = 'name';
   sortOrder = true;
 
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
+    this.getCartInfo();
     this.sub = this.cartService.channel1$.subscribe(() => {
-        this.productsList = this.cartService.getProdutsInCart();
-        this.totalBill = this.cartService.getTotalBill();
-        this.totalAmount = this.cartService.getItemsNumber();
+        this.getCartInfo();
     });
   }
 
@@ -44,7 +48,7 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   clearCart(): void {
       this.cartService.removeAllProduct();
-      this.productsList = [];
+      this.productsList$ = of([]);
   }
 
   changeSortValue(value: string): void {
@@ -53,5 +57,15 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   changeSortOrder(value: string): void {
     this.sortOrder = JSON.parse(value);
+  }
+
+  private getCartInfo(): void {
+        this.productsList$ = this.cartService.getProdutsInCart();
+        this.totalBill = this.cartService.getTotalBill();
+        this.totalAmount = this.cartService.getItemsNumber();
+  }
+
+  orderProducts(): void {
+      this.router.navigate(['/order']);
   }
 }

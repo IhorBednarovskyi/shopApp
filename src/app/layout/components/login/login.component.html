@@ -1,0 +1,10 @@
+<h2>LOGIN</h2>
+<p>State: {{message}}</p>
+<div *ngIf="!authService.isLoggedIn">
+    <label for="isAdmin">Is Admin</label>
+    <input type="checkbox" name="isAdmin" [(ngModel)]="isAdmin">
+</div>
+<p>
+  <button class="btn btn-primary" (click)="onLogin()"  *ngIf="!authService.isLoggedIn">Login</button>
+  <button class="btn btn-primary" (click)="onLogout()" *ngIf="authService.isLoggedIn">Logout</button>
+</p>

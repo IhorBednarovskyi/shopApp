@@ -14,7 +14,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
     currentTime: Observable<Date>;
 
-    private title = 'Shop app';
+    private title = 'Auto details market';
 
     constructor(private renderer: Renderer2) {}
 

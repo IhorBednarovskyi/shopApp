@@ -1,5 +1,16 @@
 <div class="product-list-body clearfix">
 	<h3>Products list</h3>
-	<app-product *ngFor="let product of products$ | async " [product]="product" (buyProduct)="onBuyProduct($event)"></app-product>
+
+    <button class="btn btn-primary"
+        type="button"
+        (click)="createProduct()">Create product
+    </button>
+	<app-product *ngFor="let product of products$ | async " [product]="product"
+	    [isAdmin]="isAdmin"
+	    (buyProduct)="onBuyProduct($event)"
+	    (editProduct)="onEditProduct($event)"
+	    (deleteProduct)="onDeleteProduct($event)"
+	    (goToProductCard)="onGoToProductCard($event)">
+    </app-product>
 </div>
 

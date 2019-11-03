@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable, of, throwError } from 'rxjs';
+import { map, catchError  } from 'rxjs/operators';
 
 import { CartProduct } from './../models/cart-product.model';
 import { Product } from './../../products/models/product.model';
+import { LocalStorageService } from './../../core/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,29 +15,44 @@ export class CartService {
 
     public channel1$ = this.channel1.asObservable();
 
-    getProdutsInCart(): Array<CartProduct> {
-        return this.itemList;
+    constructor(
+      private localStorage: LocalStorageService
+    ) {
+      this.itemList = this.localStorage.get('cartProducts') || [];
+    }
+
+    getProdutsInCart(): Observable<CartProduct[]> {
+        return of(this.itemList);
+    }
+
+    getProduct(id: number | string): Observable<CartProduct> {
+      return this.getProdutsInCart()
+        .pipe(
+          map((products: Array<CartProduct>) => products.find(product => product.id === +id)),
+          catchError(err => throwError('Error in getProduct method'))
+        );
     }
 
     addProductInCart(product: Product): void {
         let itemAmount: number;
         const tempItemList: Array<CartProduct> = this.itemList.filter(item => {
-            const isName: boolean = item.getName() === product.name;
+            const isName: boolean = item.name === product.name;
             if (isName) {
                 itemAmount = item.amount;
             }
             return !isName;
         });
-        const addedItem: CartProduct = new CartProduct(product.name, product.price,
+        const addedItem: CartProduct = new CartProduct(product.id, product.name, product.price,
             (itemAmount ? ++itemAmount : 1));
 
         this.itemList = [...tempItemList, addedItem];
+        this.localStorage.save('cartProducts', this.itemList);
         this.channel1.next();
     }
 
     getTotalBill(): number {
         return this.itemList.reduce((price: number, item: CartProduct) => {
-            return price + item.getTotalPrice();
+            return price + item.amount * item.price;
         }, 0);
     }
 
@@ -46,11 +63,13 @@ export class CartService {
     }
 
     removeProduct(name: string): void {
-        this.itemList = this.itemList.filter(item => item.getName() !== name);
+        this.itemList = this.itemList.filter(item => item.name !== name);
+        this.localStorage.save('cartProducts', this.itemList);
         this.channel1.next();
     }
 
     removeAllProduct(): void {
         this.itemList = [];
+        this.localStorage.save('cartProducts', this.itemList);
     }
 }

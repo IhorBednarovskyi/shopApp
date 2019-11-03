@@ -1,7 +1,7 @@
 <div class="shop-cart-body">
-	<div *ngIf="productsList?.length > 0 else emptyBlock">
+	<div *ngIf="(productsList$ | async)?.length > 0; else emptyBlock">
     	<h3>Products in cart</h3>
-		<div><strong>Total Bill: </strong> {{totalBill | currency : USD}} </div>
+		<div><strong>Total Bill: </strong> {{totalBill | currency : 'USD'}} </div>
 		<div><strong>Products in Cart:</strong> {{totalAmount}}</div>
 		<div>
 			<strong>Sort by:</strong>
@@ -17,8 +17,10 @@
 		</div>
 		<button class="btn btn-danger"
 			(click)="clearCart()">ClearAll</button>
+		<button class="btn btn-primary"
+			(click)="orderProducts()">Order</button>
 		<div class="clearfix">
-			<app-cart-item *ngFor="let product of productsList | orderBy:sortField:sortOrder"
+			<app-cart-item *ngFor="let product of productsList$ | async | orderBy:sortField:sortOrder"
 	    		[product]="product"
 	    		(productAmountChange)="productAmountChange()"
 	    		(removeProduct)="removeProduct($event)"></app-cart-item>

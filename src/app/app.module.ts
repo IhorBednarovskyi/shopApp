@@ -9,6 +9,7 @@ import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
 import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './layout/layout.module';
+import { CoreModule } from './core/core.module';
 
 
 // App components
@@ -20,12 +21,14 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ProductsModule,
     CartModule,
     SharedModule,
     FormsModule,
-    LayoutModule
+    LayoutModule,
+    CoreModule,
+
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })

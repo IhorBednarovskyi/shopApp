@@ -10,7 +10,7 @@ export class ItemHoverDirective {
     constructor(private el: ElementRef, private renderer: Renderer2) {
     }
 
-    @HostBinding('class') className = 'col-xs-6 col-lg-4 shop-card-body';
+    @HostBinding('class') className = 'shop-card-body';
 
     @HostListener('mouseover') onMouseOver() {
         this.renderer.addClass(this.el.nativeElement, this.bgroundColorClass);

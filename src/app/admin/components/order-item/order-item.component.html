@@ -1,0 +1,13 @@
+<div appItemHover>
+	<h4 class="name-content" [title]="order.id">{{order.id}}</h4>
+	<ul class="list-inline">
+		<li><strong>First Name:</strong> {{order.firstName}}</li>
+		<li><strong>Last Name:</strong> {{order.lastName}}</li>
+	</ul>
+
+
+	<div>
+		{{order.productList | json }}
+	</div>
+
+</div>

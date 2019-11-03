@@ -1,18 +1,11 @@
 export class CartProduct {
     constructor(
-        private name: string,
-        private price: number,
+        public id: number,
+        public name: string,
+        public price: number,
         public amount?: number
     ) {
         this.amount = amount || 1;
-    }
-
-    getName(): string {
-        return this.name;
-    }
-
-    getPrice(): number {
-        return this.price;
     }
 
     changeAmount(count: number) {

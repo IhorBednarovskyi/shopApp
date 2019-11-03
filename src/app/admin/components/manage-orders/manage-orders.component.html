@@ -1,0 +1,7 @@
+<div class="product-list-body clearfix">
+	<h3>Orders list</h3>
+
+	<app-order-item *ngFor="let order of ordersList$ | async " [order]="order">
+    </app-order-item>
+</div>
+

@@ -20,6 +20,6 @@ export class CartItemComponent {
     }
 
     removeHandler(): void {
-        this.removeProduct.emit(this.product.getName());
+        this.removeProduct.emit(this.product.name);
     }
 }
