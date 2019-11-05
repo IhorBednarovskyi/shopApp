@@ -24,7 +24,7 @@ const routes: Routes = [
               product: ProductResolveGuard
             }
           },
-          { path: 'product/edit', component: ProductFormComponent },
+          { path: 'products/add', component: ProductFormComponent },
           { path: '', component: AdminPageComponent }
         ]
       }

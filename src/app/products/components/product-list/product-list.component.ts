@@ -45,7 +45,7 @@ export class ProductListComponent implements OnInit {
   }
 
   createProduct() {
-    const link = ['/admin/product/edit'];
+    const link = ['/admin/products/add'];
     this.router.navigate(link);
   }
 
