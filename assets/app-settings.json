@@ -1,0 +1,27 @@
+{
+	"products": [
+		{ "id": 1, "name": "Car Charger for Samsung Galaxy S5",
+		"description": "Of Imitation Leather. leaves full access to your phone's",
+		"price": "12.56", "category": "Interior Accessories", "isAvailable": true},
+
+		{ "id": 2, "name": "Thule 933300 Easyfold XT 2-Bike Towbar Carrier",
+		"description": "Pre-assembled, no tools required. Lock your bikes to the bikes",
+		"price": "517.00", "category": "Exterior Accessories", "isAvailable": false},
+
+		{ "id": 3, "name": "Snell SA2015 Approved Full Face Racing Helmet",
+		"description": "These Snell SA2015 helmets keep comfort in mind for drivers",
+		"price": "168.88", "category": "Motorcycle", "isAvailable": true},
+
+		{ "id": 4, "name": "22x11.00-10 with 10x7 Fusion Glossy Black Wheels for Golf Cart",
+		"description": "Set of 4 Tire and Wheel Assemblies ** Wheel Color: Glossy Black",
+		"price": "379.24", "category": "Wheels", "isAvailable": true},
+
+		{ "id": 6, "name": "Radiator Cooling Fan Motor Assembly",
+		"description": "Radiator Cooling Fan Motor Assembly with Control Module Replacement",
+		"price": "159.58", "category": "Replacement Parts", "isAvailable": true},
+
+		{ "id": 5, "name": "Fit Hyundai Genesis Coupe 2Dr Black Full LED Sequential",
+		"description": "Exactly the same as shown in the picture. High quality black",
+		"price": "419.22", "category": "Lighting Accessories", "isAvailable": false}
+	]
+}
