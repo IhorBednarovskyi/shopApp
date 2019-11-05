@@ -44,7 +44,7 @@ export class ProductFormComponent implements OnInit {
     }
 
     onReturn(): void {
-        this.router.navigate(['/products-list']);
+        this.router.navigate(['/admin']);
     }
 
     changeCategory(value: ProductType) {

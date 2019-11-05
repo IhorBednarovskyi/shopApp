@@ -32,8 +32,8 @@ export class AuthGuard implements CanActivate, CanLoad {
     if (this.authService.isAdmin) { return true; }
 
     this.authService.redirectUrl = url;
-
-    return this.router.parseUrl('/login');
+    this.router.navigate(['/login']);
+    return false;
   }
 
 }

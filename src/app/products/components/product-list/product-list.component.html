@@ -1,7 +1,7 @@
 <div class="product-list-body clearfix">
 	<h3>Products list</h3>
 
-    <button class="btn btn-primary"
+    <button class="btn btn-primary" *ngIf="isAdmin"
         type="button"
         (click)="createProduct()">Create product
     </button>
