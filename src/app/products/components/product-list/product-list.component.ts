@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { Product } from './../../models/product.model';
-import { ProductsService, ProductsPromiseService } from './../../services';
+import { ProductsPromiseService } from './../../services';
 import { CartService } from './../../../cart/services/cart.service';
 
 
@@ -17,7 +17,6 @@ export class ProductListComponent implements OnInit {
   products: Promise<Product[]>;
 
   constructor(
-      private productsService: ProductsService,
       private productsPromiseService: ProductsPromiseService,
       private router: Router,
       private cartService: CartService
@@ -37,7 +36,10 @@ export class ProductListComponent implements OnInit {
   }
 
   onDeleteProduct(product: Product): void {
-      this.productsService.deleteProduct(product);
+      this.productsPromiseService.deleteProduct(product)
+      .then(() => (this.products = this.productsPromiseService.getProducts()))
+      .catch(err => console.log(err));
+
   }
 
   onGoToProductCard(product: Product): void {

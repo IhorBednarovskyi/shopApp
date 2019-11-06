@@ -6,7 +6,7 @@ import { pluck  } from 'rxjs/operators';
 
 import { Product } from './../../models/product.model';
 import { ProductType } from './../../models/product-type.enum';
-import { ProductsService } from './../../services/products.service';
+import { ProductsPromiseService } from './../../services';
 
 @Component({
   selector: 'app-product-form',
@@ -19,7 +19,7 @@ export class ProductFormComponent implements OnInit {
     categories = ProductType;
 
     constructor(
-        private productsService: ProductsService,
+        private productsPromiseService: ProductsPromiseService,
         private router: Router,
         private route: ActivatedRoute
     ) { }
@@ -32,15 +32,12 @@ export class ProductFormComponent implements OnInit {
     }
 
     onSaveProduct() {
-        const product = { ...this.product } as Product;
+      const product = { ...this.product } as Product;
+      const method = product.id ? 'updateProduct' : 'createProduct';
 
-        if (product.id) {
-            this.productsService.updateProduct(product);
-        } else {
-            this.productsService.createProduct(product);
-        }
-
-        this.onReturn();
+      this.productsPromiseService[method](product)
+        .then(() => this.onReturn())
+        .catch(err => console.log(err));
     }
 
     onReturn(): void {
