@@ -15,8 +15,11 @@ export class CartListComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   productsList$: Observable<CartProduct[]>;
+
+  // эти поля можно оформить как тип tuple
   totalBill: number;
   totalAmount: number;
+  // эти поля можно оформить как тип tuple
   sortField = 'name';
   sortOrder = true;
 
