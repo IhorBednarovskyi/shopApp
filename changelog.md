@@ -1,3 +1,11 @@
+VERSION 1.5.0
+Simulating Web API server with json-server
+Rewrite ProductService as Product Promise Service
+Rewrite CartService and OrdersService as Observable Services
+Added TimingInterceptor wich shows request duration for all "GET" requests
+Realize AppSettings service and added it Core module
+
+
 version 1.4.0
 Applied local storage service to save and retrive porduct list, card list and submitted orders.
 Configured Admin route as lazy-loading route and adeded canLoad guard to check if user is logged as admin.

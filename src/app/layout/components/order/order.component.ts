@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 // rxjs
 import { Subscription } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 import { OrderModel } from './models/order.model';
 import { OrderService } from './services/order.service';
-import { CartService } from './../../../cart/services/cart.service';
+import { CartObservableService } from './../../../cart/services';
 import { CartProduct } from './../../../cart/models/cart-product.model';
 
 @Component({
@@ -18,9 +19,10 @@ export class OrderComponent implements OnInit, OnDestroy {
   totalBill: number;
 
   private sub: Subscription;
+  private clearSub: Subscription;
 
   constructor(
-    private cartService: CartService,
+    private cartObservableService: CartObservableService,
     private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router,
@@ -30,16 +32,20 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.order = new OrderModel('', '', []);
 
 
-    this.sub = this.cartService.getProdutsInCart()
+    this.sub = this.cartObservableService.getProductsInCart()
       .subscribe((products: Array<CartProduct>) => {
         this.order.productList = products;
-        this.totalBill = this.cartService.getTotalBill();
+        this.totalBill = this.cartObservableService.getTotalBill(products);
       });
   }
 
   ngOnDestroy() {
     if (this.sub) {
         this.sub.unsubscribe();
+    }
+
+    if (this.clearSub) {
+        this.clearSub.unsubscribe();
     }
   }
 
@@ -48,7 +54,12 @@ export class OrderComponent implements OnInit, OnDestroy {
 
     this.orderService.createOrder(order);
     this.router.navigate(['/products-list']);
-    this.cartService.removeAllProduct();
+    this.clearSub = this.cartObservableService.removeAllProduct()
+      .subscribe(
+        console.log,
+        console.error,
+        () => console.log('completed httpResult$')
+      );
   }
 
   onCancel() {

@@ -49,7 +49,7 @@ export class ProductsPromiseService {
     const options = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    
+
     return this.http
       .post(url, body, options)
       .toPromise()

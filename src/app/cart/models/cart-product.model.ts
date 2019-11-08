@@ -7,12 +7,4 @@ export class CartProduct {
     ) {
         this.amount = amount || 1;
     }
-
-    changeAmount(count: number) {
-        this.amount += count;
-    }
-
-    getTotalPrice() {
-        return this.amount * this.price;
-    }
 }

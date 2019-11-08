@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently --kill-others \"ng lint && ng serve -o\" \"json-server --watch assets\\app-settings.json\"",
+    "start": "concurrently --kill-others \"ng lint && ng serve -o\" \"json-server --watch assets\\db.json\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

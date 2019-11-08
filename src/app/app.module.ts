@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './layout/layout.module';
 import { CoreModule } from './core/core.module';
 
+import { httpInterceptorProviders } from './core/interceptors';
 
 // App components
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { AppComponent } from './app.component';
 
     AppRoutingModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [httpInterceptorProviders]
 })
 export class AppModule { }

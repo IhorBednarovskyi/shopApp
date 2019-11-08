@@ -1,9 +1,9 @@
 import { InjectionToken } from '@angular/core';
 
-const usersBaseUrl = 'http://localhost:3000/cart';
-export const UsersAPI = new InjectionToken<string>('UsersAPI');
+const cartBaseUrl = 'http://localhost:3000/cart';
+export const CartAPI = new InjectionToken<string>('CartAPI');
 
-export const UsersAPIProvider = {
-    provide: UsersAPI,
-    useValue: usersBaseUrl
+export const CartAPIProvider = {
+    provide: CartAPI,
+    useValue: cartBaseUrl
 };

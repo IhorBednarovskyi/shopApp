@@ -21,12 +21,12 @@ export class CartService {
       this.itemList = this.localStorage.get('cartProducts') || [];
     }
 
-    getProdutsInCart(): Observable<CartProduct[]> {
+    getProductsInCart(): Observable<CartProduct[]> {
         return of(this.itemList);
     }
 
     getProduct(id: number | string): Observable<CartProduct> {
-      return this.getProdutsInCart()
+      return this.getProductsInCart()
         .pipe(
           map((products: Array<CartProduct>) => products.find(product => product.id === +id)),
           catchError(err => throwError('Error in getProduct method'))

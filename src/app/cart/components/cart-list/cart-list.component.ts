@@ -3,7 +3,7 @@ import { Subscription, Observable, of } from 'rxjs';
 
 import { Router } from '@angular/router';
 
-import { CartService } from './../../services/cart.service';
+import { CartObservableService } from './../../services';
 import { CartProduct } from './../../models/cart-product.model';
 
 @Component({
@@ -13,8 +13,9 @@ import { CartProduct } from './../../models/cart-product.model';
 })
 export class CartListComponent implements OnInit, OnDestroy {
   private sub: Subscription;
+  private productsSub: Subscription;
 
-  productsList$: Observable<CartProduct[]>;
+  products: CartProduct[];
   totalBill: number;
   totalAmount: number;
   sortField = 'name';
@@ -22,33 +23,48 @@ export class CartListComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private cartService: CartService,
+    private cartObservableService: CartObservableService,
     private router: Router
     ) {}
 
   ngOnInit() {
     this.getCartInfo();
-    this.sub = this.cartService.channel1$.subscribe(() => {
-        this.getCartInfo();
-    });
   }
 
   ngOnDestroy() {
+    if (this.sub) {
       this.sub.unsubscribe();
+    }
+    if (this.productsSub) {
+      this.productsSub.unsubscribe();
+    }
   }
 
-  productAmountChange(): void {
-      this.totalBill = this.cartService.getTotalBill();
-      this.totalAmount = this.cartService.getItemsNumber();
+  saveChanges(product: CartProduct): void {
+      this.cartObservableService.updateProduct(product)
+      .subscribe(
+        console.log,
+        console.error,
+        () => console.log('completed httpResult$')
+      );
+      this.calculateData();
   }
 
-  removeProduct(name: string): void {
-      this.cartService.removeProduct(name);
+  removeProduct(id: number): void {
+      this.sub = this.cartObservableService.removeProduct(id)
+      .subscribe(value => {
+        this.products = value || [];
+        this.calculateData();
+      });
   }
 
   clearCart(): void {
-      this.cartService.removeAllProduct();
-      this.productsList$ = of([]);
+      this.cartObservableService.removeAllProduct()
+      .subscribe(value => {
+        this.products = [];
+        this.totalBill = 0;
+        this.totalAmount = 0;
+      });
   }
 
   changeSortValue(value: string): void {
@@ -60,9 +76,16 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   private getCartInfo(): void {
-        this.productsList$ = this.cartService.getProdutsInCart();
-        this.totalBill = this.cartService.getTotalBill();
-        this.totalAmount = this.cartService.getItemsNumber();
+    this.productsSub = this.cartObservableService.getProductsInCart()
+        .subscribe(value => {
+            this.products = value || [];
+            this.calculateData();
+        });
+  }
+
+  private calculateData(): void {
+      this.totalBill = this.cartObservableService.getTotalBill(this.products);
+      this.totalAmount = this.cartObservableService.getItemsNumber(this.products);
   }
 
   orderProducts(): void {

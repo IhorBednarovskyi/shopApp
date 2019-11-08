@@ -1,4 +1,4 @@
-import { Component, Input, Output,
+import { Component, Input, Output, OnInit,
     EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { CartProduct } from './../../models/cart-product.model';
@@ -9,17 +9,23 @@ import { CartProduct } from './../../models/cart-product.model';
   styleUrls: ['./cart-item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CartItemComponent {
+export class CartItemComponent implements OnInit {
+    private originalProduct: CartProduct;
     @Input() product: CartProduct;
 
-    @Output() productAmountChange: EventEmitter<CartProduct> = new EventEmitter<CartProduct>();
-    @Output() removeProduct: EventEmitter<string> = new EventEmitter<string>();
+    @Output() saveChanges: EventEmitter<CartProduct> = new EventEmitter<CartProduct>();
+    @Output() removeProduct: EventEmitter<number> = new EventEmitter<number>();
 
-    changeHandler(): void {
-        this.productAmountChange.emit();
+    ngOnInit() {
+      this.originalProduct = { ...this.product };
+    }
+
+    saveHandler(): void {
+        this.originalProduct = { ...this.product };
+        this.saveChanges.emit(this.product);
     }
 
     removeHandler(): void {
-        this.removeProduct.emit(this.product.name);
+        this.removeProduct.emit(+this.product.id);
     }
 }

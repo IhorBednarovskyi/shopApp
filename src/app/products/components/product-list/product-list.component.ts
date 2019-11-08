@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Product } from './../../models/product.model';
 import { ProductsPromiseService } from './../../services';
-import { CartService } from './../../../cart/services/cart.service';
+import { CartObservableService } from './../../../cart/services';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class ProductListComponent implements OnInit {
   constructor(
       private productsPromiseService: ProductsPromiseService,
       private router: Router,
-      private cartService: CartService
+      private cartObservableService: CartObservableService
       ) { }
 
   ngOnInit() {
@@ -27,7 +27,11 @@ export class ProductListComponent implements OnInit {
   }
 
   onBuyProduct(product: Product): void {
-      this.cartService.addProductInCart(product);
+      this.cartObservableService.addProductInCart(product).subscribe(
+        console.log,
+        console.error,
+        () => console.log('completed httpResult$')
+      );
   }
 
   onEditProduct(product: Product): void {

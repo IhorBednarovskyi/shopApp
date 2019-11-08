@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Car Charger for Samsung Galaxy S5 fgfddfg",
       "description": "Of Imitation Leather. leaves full access to your phone's",
-      "price": "12.56",
+      "price": 125.6,
       "category": "Interior Accessories",
       "isAvailable": true
     },
@@ -47,6 +47,26 @@
       "price": "419.22",
       "category": "Lighting Accessories",
       "isAvailable": false
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "name": "Car Charger for Samsung Galaxy S5 fgfddfg",
+      "price": 125.6,
+      "amount": 4
+    },
+    {
+      "id": 4,
+      "name": "22x11.00-10 with 10x7 Fusion Glossy Black Wheels for Golf Cart",
+      "price": "379.24",
+      "amount": 2
+    },
+    {
+      "id": 3,
+      "name": "Snell SA2015 Approved Full Face Racing Helmet",
+      "price": "168.88",
+      "amount": 3
     }
   ]
 }

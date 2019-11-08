@@ -5,6 +5,8 @@ import { SharedModule } from './../shared/shared.module';
 
 import { CartRoutingModule } from './cart-routing.module';
 
+import { CartAPIProvider } from './cart.config';
+
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 
 @NgModule({
@@ -12,6 +14,9 @@ import { CartItemComponent } from './components/cart-item/cart-item.component';
   declarations: [
     CartRoutingModule.components,
     CartItemComponent
+  ],
+  providers: [
+    CartAPIProvider
   ]
 })
 
