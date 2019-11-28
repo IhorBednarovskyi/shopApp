@@ -1,43 +1,46 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
+
+// NgRx
+import { Store, select } from '@ngrx/store';
+import { AppState, getProductByUrl } from './../../core/@ngrx';
+import * as ProductsActions from './../../core/@ngrx/products/products.actions';
+import * as RouterActions from './../../core/@ngrx/router/router.actions';
 
 // rxjs
 import { Observable, of, from } from 'rxjs';
-import { map, catchError, take } from 'rxjs/operators';
+import { map, catchError, take, tap, delay } from 'rxjs/operators';
 
 import { Product } from './../models/product.model';
 import { ProductsPromiseService } from './../services';
-import { ProductsModule } from './../products.module';
+import { ProductsServicesModule } from '../products-services.module';
 
 @Injectable({
-  providedIn: ProductsModule
+  providedIn: ProductsServicesModule
 })
 export class ProductResolveGuard implements Resolve<Product> {
   constructor(
     private productsPromiseService: ProductsPromiseService,
-    private router: Router
+    private store: Store<AppState>
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<Product | null> {
-
-    if (!route.paramMap.has('productID')) {
-      return of(new Product(null, '', '', 0));
-    }
-
-    const id = +route.paramMap.get('productID');
-
-    return from(this.productsPromiseService.getProduct(id)).pipe(
-      map((product: Product) => {
+  resolve(): Observable<Product> | null {
+    return this.store.pipe(
+      select(getProductByUrl),
+      tap(product => this.store.dispatch(new ProductsActions.SelectProduct(product))),
+      delay(2000),
+      map(product => {
         if (product) {
           return product;
         } else {
-          this.router.navigate(['/admin']);
+          this.store.dispatch(new RouterActions.Go({ path: ['/products-list']}));
           return null;
         }
       }),
       take(1),
       catchError(() => {
-        this.router.navigate(['/admin']);
+        this.store.dispatch(new RouterActions.Go({ path: ['/products-list']}));
+        // catchError MUST return observable
         return of(null);
       })
     );

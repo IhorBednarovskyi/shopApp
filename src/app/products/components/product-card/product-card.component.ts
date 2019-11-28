@@ -1,5 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { AppState } from './../../../core/@ngrx';
+
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -21,7 +26,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
     constructor(
         private productsService: ProductsService,
-        private router: Router,
+        private store: Store<AppState>,
         private route: ActivatedRoute
     ) { }
 
@@ -43,7 +48,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
 
     onReturn(): void {
-        this.router.navigate(['/products-list']);
+        this.store.dispatch(new RouterActions.Go({ path: ['/products-list']}));
     }
 
 }

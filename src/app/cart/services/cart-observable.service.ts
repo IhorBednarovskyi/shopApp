@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable, throwError, of } from 'rxjs';
-import { catchError, retry, switchMap, concatMap, map } from 'rxjs/operators';
+import { catchError, retry, switchMap, concatMap, map, flatMap } from 'rxjs/operators';
 
 import { CartProduct } from './../models/cart-product.model';
 import { Product } from './../../products/models/product.model';
@@ -40,61 +40,77 @@ export class CartObservableService {
         );
   }
 
-  addProductInCart(product: Product) {
-    const url = `${this.cartUrl}/${product.id}`;
+  addProductInCart(product: Product): Observable<CartProduct> {
     return this.getProductsInCart()
       .pipe(
           switchMap(items => {
             const cartPoduct = items.filter(item => product.id === item.id);
             const amount = cartPoduct.length ? cartPoduct[0].amount : 0;
+
             return this.createProduct(product, amount);
           })
       );
   }
 
-  updateProduct(product: CartProduct) {
+  updateProduct(product: CartProduct): Observable<CartProduct> {
     const url = `${this.cartUrl}/${product.id}`;
     const body = JSON.stringify(product);
-    const options = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-    return this.updateHandler(url, body, options);
+
+    this.updateHandler(url, body).subscribe(
+        console.log,
+        console.error,
+        () => console.log('completed httpResult$')
+      );
+
+    return of(product);
   }
 
-  private createProduct(product: Product, amount: number) {
+  private createProduct(product: Product, amount: number): Observable<CartProduct> {
     const url = !amount ? this.cartUrl : `${this.cartUrl}/${product.id}`;
-    const body = JSON.stringify({
+    const cartProduct = {
       id: product.id,
       name: product.name,
       price: product.price,
       amount: amount ? ++amount : 1
-    });
-    const options = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
+    const body = JSON.stringify(cartProduct);
 
-    return !amount ? this.createHandler(url, body, options) :
-        this.updateHandler(url, body, options);
+    const observable = !amount ? this.createHandler(url, body) : this.updateHandler(url, body);
+
+    observable.subscribe(
+        console.log,
+        console.error,
+        () => console.log('completed httpResult$')
+      );
+    // Have to do that because this.createHandler & this.updateHandler don't return product in addProduct$ effect
+    // can't understand why it's happening
+    return of(cartProduct);
   }
 
-  private createHandler(url, body, options) {
-    return this.http
-      .post<Product>(url, body, options);
+  private createHandler(url, body): Observable<CartProduct> {
+    return this.http.post<CartProduct>(url, body, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      });
   }
 
-  private updateHandler(url, body, options) {
-    return this.http
-      .put<CartProduct>(url, body, options);
+  private updateHandler(url, body): Observable<CartProduct> {
+    return this.http.put<CartProduct>(url, body, {
+         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      });
   }
 
 
-  removeProduct(id: number): Observable<CartProduct[]> {
+  removeProduct(id: number): Observable<number> {
     const url = `${this.cartUrl}/${id}`;
-
-    return this.http.delete(url)
+    this.http.delete(url)
       .pipe(
         concatMap(() => this.getProductsInCart())
+      ).subscribe(
+        console.log,
+        console.error,
+        () => console.log('completed httpResult$')
       );
+    return of(id);
   }
 
   removeAllProduct() {

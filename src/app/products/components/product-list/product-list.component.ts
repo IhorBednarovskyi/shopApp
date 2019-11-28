@@ -1,11 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { Product } from './../../models/product.model';
-import { ProductsPromiseService } from './../../services';
-import { CartObservableService } from './../../../cart/services';
 
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
+
+import { Store, select } from '@ngrx/store';
+import { AppState, getProductsData, getProductsError } from './../../../core/@ngrx';
+import * as ProductsActions from './../../../core/@ngrx';
+
+import * as CartActions from './../../../core/@ngrx/cart/cart.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -14,46 +18,41 @@ import { CartObservableService } from './../../../cart/services';
 })
 export class ProductListComponent implements OnInit {
   @Input() isAdmin: boolean;
-  products: Promise<Product[]>;
+
+  products$: Observable<ReadonlyArray<Product>>;
+  productsError$: Observable<Error | string>;
 
   constructor(
-      private productsPromiseService: ProductsPromiseService,
-      private router: Router,
-      private cartObservableService: CartObservableService
-      ) { }
+    private store: Store<AppState>
+  ) { }
 
   ngOnInit() {
-      this.products = this.productsPromiseService.getProducts();
+      this.products$ = this.store.pipe(select(getProductsData));
+      this.productsError$ = this.store.pipe(select(getProductsError));
   }
 
   onBuyProduct(product: Product): void {
-      this.cartObservableService.addProductInCart(product).subscribe(
-        console.log,
-        console.error,
-        () => console.log('completed httpResult$')
-      );
+      this.store.dispatch(new CartActions.AddCartProduct(product));
   }
 
   onEditProduct(product: Product): void {
       const link = ['/admin/product/edit', product.id];
-      this.router.navigate(link);
+      this.store.dispatch(new RouterActions.Go({ path: link }));
   }
 
   onDeleteProduct(product: Product): void {
-      this.productsPromiseService.deleteProduct(product)
-      .then(() => (this.products = this.productsPromiseService.getProducts()))
-      .catch(err => console.log(err));
+      this.store.dispatch(new ProductsActions.DeleteProduct(product));
 
   }
 
   onGoToProductCard(product: Product): void {
       const link = ['/product', product.id];
-      this.router.navigate(link);
+      this.store.dispatch(new RouterActions.Go({ path: link }));
   }
 
   createProduct() {
-    const link = ['/admin/products/add'];
-    this.router.navigate(link);
+      const link = ['/admin/products/add'];
+      this.store.dispatch(new RouterActions.Go({ path: link }));
   }
 
 }

@@ -1,7 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
-import { Router } from '@angular/router';
+import * as CartActions from './../../../core/@ngrx/cart/cart.actions';
+
+import { AppState, getCartProducts, getCartError } from './../../../core/@ngrx';
+
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 import { CartObservableService } from './../../services';
 import { CartProduct } from './../../models/cart-product.model';
@@ -12,10 +17,11 @@ import { CartProduct } from './../../models/cart-product.model';
   styleUrls: ['./cart-list.component.css']
 })
 export class CartListComponent implements OnInit, OnDestroy {
-  private sub: Subscription;
-  private productsSub: Subscription;
+  cartError$: Observable<Error | string>;
+  cartProducts: CartProduct[];
 
-  products: CartProduct[];
+  private sub: Subscription;
+
   totalBill: number;
   totalAmount: number;
   sortField = 'name';
@@ -24,47 +30,40 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartObservableService: CartObservableService,
-    private router: Router
+    private store: Store<AppState>
     ) {}
 
   ngOnInit() {
-    this.getCartInfo();
+    this.sub = this.store.pipe(select(getCartProducts))
+      .subscribe(products => {
+          this.cartProducts = products;
+          this.calculateData();
+        },
+        err => console.log(err)
+    );
+
+    this.cartError$ = this.store.pipe(select(getCartError));
+    this.store.dispatch(new CartActions.GetCartProducts());
   }
 
   ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();
     }
-    if (this.productsSub) {
-      this.productsSub.unsubscribe();
-    }
   }
 
   saveChanges(product: CartProduct): void {
-      this.cartObservableService.updateProduct(product)
-      .subscribe(
-        console.log,
-        console.error,
-        () => console.log('completed httpResult$')
-      );
+      this.store.dispatch(new CartActions.UpdateCartProduct(product));
       this.calculateData();
   }
 
   removeProduct(id: number): void {
-      this.sub = this.cartObservableService.removeProduct(id)
-      .subscribe(value => {
-        this.products = value || [];
-        this.calculateData();
-      });
+      this.store.dispatch(new CartActions.DeleteCartProduct(id));
+      this.calculateData();
   }
 
   clearCart(): void {
-      this.cartObservableService.removeAllProduct()
-      .subscribe(value => {
-        this.products = [];
-        this.totalBill = 0;
-        this.totalAmount = 0;
-      });
+      this.store.dispatch(new CartActions.DeleteAllCartProducts());
   }
 
   changeSortValue(value: string): void {
@@ -75,20 +74,12 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.sortOrder = JSON.parse(value);
   }
 
-  private getCartInfo(): void {
-    this.productsSub = this.cartObservableService.getProductsInCart()
-        .subscribe(value => {
-            this.products = value || [];
-            this.calculateData();
-        });
-  }
-
   private calculateData(): void {
-      this.totalBill = this.cartObservableService.getTotalBill(this.products);
-      this.totalAmount = this.cartObservableService.getItemsNumber(this.products);
+      this.totalBill = this.cartObservableService.getTotalBill(this.cartProducts);
+      this.totalAmount = this.cartObservableService.getItemsNumber(this.cartProducts);
   }
 
   orderProducts(): void {
-      this.router.navigate(['/order']);
+      this.store.dispatch(new RouterActions.Go({ path: ['/order'] }));
   }
 }

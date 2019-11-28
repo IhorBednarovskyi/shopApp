@@ -45,6 +45,7 @@ export class ProductsPromiseService {
 
   createProduct(product: Product): Promise<Product> {
     const url = this.productsUrl;
+    product.id = +Date.now();
     const body = JSON.stringify(product);
     const options = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })

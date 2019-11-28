@@ -2,7 +2,7 @@ import { ProductType } from './product-type.enum';
 
 export class Product {
     constructor(
-        public id: number = +Date.now(),
+        public id: number,
         public name: string,
         public description: string,
         public price: number,

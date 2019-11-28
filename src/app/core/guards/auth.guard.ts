@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot,
-    RouterStateSnapshot, UrlTree, Router, CanLoad, Route, UrlSegment } from '@angular/router';
+    RouterStateSnapshot, UrlTree, CanLoad, Route, UrlSegment } from '@angular/router';
 import { Observable } from 'rxjs';
+
+// @Ngrx
+import { Store } from '@ngrx/store';
+import { AppState } from './../@ngrx';
+import * as RouterActions from './../@ngrx/router/router.actions';
 
 import { AuthService } from './../services/auth.service';
 
@@ -12,7 +17,7 @@ export class AuthGuard implements CanActivate, CanLoad {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private store: Store<AppState>
   ) {}
 
   canActivate(
@@ -32,7 +37,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     if (this.authService.isAdmin) { return true; }
 
     this.authService.redirectUrl = url;
-    this.router.navigate(['/login']);
+    this.store.dispatch(new RouterActions.Go({ path: ['/login'] }));
     return false;
   }
 

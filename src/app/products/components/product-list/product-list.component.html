@@ -1,3 +1,4 @@
+<p *ngIf="(productsError$ | async) as value">{{value}}</p>
 <div class="product-list-body clearfix">
 	<h3>Products list</h3>
 
@@ -5,7 +6,7 @@
         type="button"
         (click)="createProduct()">Create product
     </button>
-	<app-product *ngFor="let product of products | async " [product]="product"
+	<app-product *ngFor="let product of (products$ | async)" [product]="product"
 	    [isAdmin]="isAdmin"
 	    (buyProduct)="onBuyProduct($event)"
 	    (editProduct)="onEditProduct($event)"

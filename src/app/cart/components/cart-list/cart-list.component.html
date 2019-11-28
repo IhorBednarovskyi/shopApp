@@ -1,5 +1,5 @@
 <div class="shop-cart-body">
-	<div *ngIf="products?.length > 0; else emptyBlock">
+	<div *ngIf="cartProducts?.length > 0; else emptyBlock">
     	<h3>Products in cart</h3>
 		<div><strong>Total Bill: </strong> {{totalBill | currency : 'USD'}} </div>
 		<div><strong>Products in Cart:</strong> {{totalAmount}}</div>
@@ -20,7 +20,7 @@
 		<button class="btn btn-primary"
 			(click)="orderProducts()">Order</button>
 		<div class="clearfix">
-			<app-cart-item *ngFor="let product of products | orderBy:sortField:sortOrder"
+			<app-cart-item *ngFor="let product of cartProducts | orderBy:sortField:sortOrder"
 	    		[product]="product"
 	    		(saveChanges)="saveChanges($event)"
 	    		(removeProduct)="removeProduct($event)"></app-cart-item>
@@ -30,4 +30,5 @@
  	<h3>There are no products in cart</h3>
 	</ng-template>
 </div>
+<p *ngIf="(usersError$ | async) as errorMessage">{{errorMessage}}</p>
 

@@ -3,9 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './../core';
 
+import { ProductsStatePreloadingGuard, ProductExistsGuard } from './../products/guards';
+
 import { AdminComponent } from './admin.component';
 import { ProductFormComponent } from './../products/components';
-import { ProductResolveGuard } from './../products/guards';
 import { AdminPageComponent, ManageOrdersComponent } from './components';
 
 
@@ -13,16 +14,14 @@ const routes: Routes = [
 {
     path: '',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, ProductsStatePreloadingGuard],
     children: [
       {
         path: '',
         children: [
           { path: 'orders', component: ManageOrdersComponent },
           { path: 'product/edit/:productID', component: ProductFormComponent,
-            resolve: {
-              product: ProductResolveGuard
-            }
+            canActivate: [ProductExistsGuard],
           },
           { path: 'products/add', component: ProductFormComponent },
           { path: '', component: AdminPageComponent }

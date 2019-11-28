@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { AppState } from './../../../core/@ngrx';
+
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 // rxjs
 import { Subject } from 'rxjs';
@@ -21,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     public authService: AuthService,
-    private router: Router
+    private store: Store<AppState>
   ) {}
 
   ngOnInit() {
@@ -42,7 +46,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           const redirect = this.authService.redirectUrl
             ? this.authService.redirectUrl
             : '/admin';
-          this.router.navigate([redirect]);
+
+          this.store.dispatch(new RouterActions.Go({ path: [redirect] }));
         }
       },
       error: (err: any) => console.log(err)

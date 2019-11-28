@@ -1,47 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { AppState, getProductByUrl  } from './../../../core/@ngrx';
+
+import * as ProductsActions from './../../../core/@ngrx/products/products.actions';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 import { Subscription } from 'rxjs';
-import { pluck  } from 'rxjs/operators';
 
 import { Product } from './../../models/product.model';
 import { ProductType } from './../../models/product-type.enum';
-import { ProductsPromiseService } from './../../services';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css']
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnDestroy {
     product: Product;
     originalProduct: Product;
     categories = ProductType;
 
+    private sub: Subscription;
+
     constructor(
-        private productsPromiseService: ProductsPromiseService,
-        private router: Router,
-        private route: ActivatedRoute
+        private store: Store<AppState>
     ) { }
 
     ngOnInit(): void {
-      this.route.data.pipe(pluck('product')).subscribe((product: Product) => {
-          this.product = { ...product };
-          this.originalProduct = { ...product };
-      });
+      this.sub = this.store
+      .pipe(select(getProductByUrl))
+      .subscribe(product => this.product = product);
+    }
+
+    ngOnDestroy(): void {
+      this.sub.unsubscribe();
     }
 
     onSaveProduct() {
       const product = { ...this.product } as Product;
-      const method = product.id ? 'updateProduct' : 'createProduct';
 
-      this.productsPromiseService[method](product)
-        .then(() => this.onReturn())
-        .catch(err => console.log(err));
+      if (product.id) {
+        this.store.dispatch(new ProductsActions.UpdateProduct(product));
+      } else {
+        this.store.dispatch(new ProductsActions.CreateProduct(product));
+      }
+
     }
 
     onReturn(): void {
-        this.router.navigate(['/admin']);
+      this.store.dispatch(new RouterActions.Go({ path: ['/admin'] }));
     }
 
     changeCategory(value: ProductType) {

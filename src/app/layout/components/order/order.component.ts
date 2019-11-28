@@ -1,5 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { AppState } from './../../../core/@ngrx';
+
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 // rxjs
 import { Subscription } from 'rxjs';
@@ -25,7 +30,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     private cartObservableService: CartObservableService,
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private router: Router,
+    private store: Store<AppState>
     ) { }
 
   ngOnInit() {
@@ -53,7 +58,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     const order = {...this.order};
 
     this.orderService.createOrder(order);
-    this.router.navigate(['/products-list']);
+    this.store.dispatch(new RouterActions.Go({ path: ['/products-list']}));
     this.clearSub = this.cartObservableService.removeAllProduct()
       .subscribe(
         console.log,
@@ -63,7 +68,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['/cart']);
+    this.store.dispatch(new RouterActions.Go({ path: ['/cart']}));
   }
 
 }
