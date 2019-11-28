@@ -1,3 +1,10 @@
+VERSION 1.6.0
+Described states for Products list and Cart list features
+Injected Reducers and Effects for Products list and Cart list features
+Injected Selectors for Products list and Cart list features
+Injected @ngrx/router-store and used it to navigate 
+Implemented and used combined selector (getProductByUrl) to get edited product
+
 VERSION 1.5.0
 Simulating Web API server with json-server
 Rewrite ProductService as Product Promise Service
