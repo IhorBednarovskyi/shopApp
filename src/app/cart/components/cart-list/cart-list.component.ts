@@ -34,6 +34,7 @@ export class CartListComponent implements OnInit, OnDestroy {
     ) {}
 
   ngOnInit() {
+    // Рекоммендуют использовать либо один колек либо объект
     this.sub = this.store.pipe(select(getCartProducts))
       .subscribe(products => {
           this.cartProducts = products;
