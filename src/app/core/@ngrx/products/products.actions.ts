@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { Product } from './../../../products/models/product.model';
 
 export enum ProductsActionTypes {
+  // Желательно больше информации дать, где действие происходит [Products]
   GET_PRODUCTS = '[Products] GET_PRODUCTS',
   GET_PRODUCTS_SUCCESS = '[Products] GET_PRODUCTS_SUCCESS',
   GET_PRODUCTS_ERROR   = '[Products] GET_PRODUCTS_ERROR',

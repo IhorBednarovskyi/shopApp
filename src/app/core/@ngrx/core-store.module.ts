@@ -13,7 +13,7 @@ import { RouterStateSerializerProvider, routerReducers, RouterEffects } from './
     StoreModule.forRoot(routerReducers),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forFeature([RouterEffects]),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]) // <-- можно RouterEffects задать сюда
   ],
   providers: [
     RouterStateSerializerProvider

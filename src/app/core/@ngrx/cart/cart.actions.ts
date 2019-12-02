@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { CartProduct } from './../../../cart/models/cart-product.model';
 import { Product } from './../../../products/models/product.model';
 
+// Не желали использовать CreateAction?
 export enum CartActionTypes {
   GET_PRODUCTS                = '[Cart] GET_PRODUCTS',
   GET_PRODUCTS_SUCCESS        = '[Cart] GET_PRODUCTS_SUCCESS',
