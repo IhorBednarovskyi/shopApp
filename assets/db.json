@@ -54,19 +54,19 @@
       "id": 3,
       "name": "Snell SA2015 Approved Full Face Racing Helmet",
       "price": "168.88",
-      "amount": 2
+      "amount": 4
     },
     {
       "id": 6,
       "name": "Radiator Cooling Fan Motor Assembly",
       "price": "159.58",
-      "amount": 1
+      "amount": 2
     },
     {
       "id": 1,
       "name": "Car Charger for Samsung Galaxy S5 ",
       "price": 125.6,
-      "amount": 2
+      "amount": 4
     }
   ]
 }

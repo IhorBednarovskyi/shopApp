@@ -34,7 +34,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
-    this.order = new OrderModel('', '', []);
+    this.order = new OrderModel();
 
 
     this.sub = this.cartObservableService.getProductsInCart()
@@ -54,8 +54,8 @@ export class OrderComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmitOrder() {
-    const order = {...this.order};
+  onSubmitOrder(formData: { [key: string]: any}) {
+    const order = { ...this.order, ...formData };
 
     this.orderService.createOrder(order);
     this.store.dispatch(new RouterActions.Go({ path: ['/products-list']}));

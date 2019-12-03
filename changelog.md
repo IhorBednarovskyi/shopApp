@@ -1,3 +1,11 @@
+VERSION 1.7.0
+Implemented ProcessOrderComponent with reactive form created by FormBuilder
+Added validation for FirstName & Email form fields
+Implemented validator for FirstName form control and validation directive for email form control
+Added ability to add and remove phone numbers (used FromArray class)
+Added OrderValidationMessageService to add validation messages
+
+
 VERSION 1.6.0
 Described states for Products list and Cart list features
 Injected Reducers and Effects for Products list and Cart list features

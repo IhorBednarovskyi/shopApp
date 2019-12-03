@@ -1,0 +1,118 @@
+<div class="panel-body">
+    <form class="form-horizontal" (ngSubmit)="onSave()" [formGroup]="orderForm">
+        <fieldset>
+            <div class="form-group"
+            	[ngClass]="{'has-error': firstNameValidationMessage}">
+                <label class="col-md-2 control-label"
+                       for="firstNameId">First Name</label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="firstNameId"
+                           type="text"
+                           placeholder="First Name (required)"
+                           formControlName="firstName"
+                           (blur)="onBlurFirstName()" />
+                    <span class="help-block" *ngIf="firstNameValidationMessage">
+                        {{ firstNameValidationMessage }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label"
+                    for="lastNameId">Last Name</label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="lastNameId"
+                           type="text"
+                           placeholder="Last Name"
+                           formControlName="lastName"/>
+                </div>
+            </div>
+
+            <div class="form-group"
+            	[ngClass]="{'has-error': emailValidationMessage}">
+                <label class="col-md-2 control-label"
+                    for="emailId">Email</label>
+
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="emailId"
+                           type="email"
+                           placeholder="Email (required)"
+                           formControlName="email"
+                           appEmailPattern
+                           (blur)="onBlurEmail()" />
+                    <span class="help-block" *ngIf="emailValidationMessage">
+                        {{ emailValidationMessage }}
+                    </span>
+                </div>
+            </div>
+            <div formArrayName="phones">
+                <div *ngFor="let phone of phones.controls; let i = index" [formGroupName]="i" >
+	            	<div class="form-group">
+		                <label class="col-md-2 control-label"
+		                    attr.for="{{'phoneId' + i}}">Phone number</label>
+
+		                <div class="col-md-8">
+		                    <input class="form-control"
+		                           id="{{'phoneId' + i}}"
+		                           type="tel"
+		                           placeholder="Phone number"
+		                           formControlName="phone"/>
+                            <button *ngIf="i" class="btn" type="button"
+                            title="Remove phone" (click)="onRemovePhone(i)">
+								Remove
+							</button>
+		                </div>
+	            	</div>
+	            </div>
+        	</div>
+        	<div class="form-group">
+              <div class="col-md-4 col-md-offset-2">
+                <button class="btn btn-primary"
+                        type="button"
+                        (click)="onAddPhone()">
+                  Add Another Phone
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-8 checkbox" >
+                    <label>
+                        <input id="pickupId"
+                            type="checkbox"
+                            formControlName="pickup"/>
+                        I will pick up
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="!orderForm.get('pickup').value">
+                <label class="col-md-2 control-label" for="addressId">Address</label>
+                <div class="col-md-8">
+                    <textarea id="addressId" placeholder="Address"
+                        formControlName="address">
+                	</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-2">
+                    <span>
+                        <button  [disabled]="!orderForm.valid" class="btn btn-primary"
+                                type="submit">
+                            Save
+                        </button>
+                    	<button class="btn btn-primary"
+                			type="button"
+                			(click)="onCancel()">Cancel
+            			</button>
+                    </span>
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
