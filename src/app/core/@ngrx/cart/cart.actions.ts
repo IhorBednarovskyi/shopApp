@@ -4,6 +4,7 @@ import { CartProduct } from './../../../cart/models/cart-product.model';
 import { Product } from './../../../products/models/product.model';
 
 export enum CartActionTypes {
+  // Пишите более точно в квадратных скобках источник дейстия
   GET_PRODUCTS                = '[Cart] GET_PRODUCTS',
   GET_PRODUCTS_SUCCESS        = '[Cart] GET_PRODUCTS_SUCCESS',
   GET_PRODUCTS_ERROR          = '[Cart] GET_PRODUCTS_ERROR',
